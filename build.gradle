@@ -1,0 +1,40 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		maven {
+			name = 'forge'
+			url = 'https://maven.minecraftforge.net/'
+		}
+	}
+	dependencies {
+		classpath('com.anatawa12.forge:ForgeGradle:2.3-1.0.+') {
+			changing = true
+		}
+	}
+}
+
+apply plugin: 'idea'
+apply plugin: 'scala'
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+minecraft {
+	version = '1.12.2-14.23.5.2838'
+	mappings = 'stable_39'
+	runDir = 'run'
+}
+
+sourceCompatibility = targetCompatibility = compileScala.sourceCompatibility = compileScala.targetCompatibility = '1.8'
+tasks.withType(ScalaCompile).configureEach {
+	options.encoding = "UTF-8"
+}
+
+dependencies {
+	compileOnly 'org.scala-lang:scala-library:2.11.7'
+}
+
+tasks.register('source', Jar) {
+	from sourceSets.main.allSource
+	archiveClassifier.set('sources')
+}
+
+build.finalizedBy source
