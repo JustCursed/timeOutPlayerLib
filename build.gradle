@@ -31,10 +31,3 @@ tasks.withType(ScalaCompile).configureEach {
 dependencies {
 	compileOnly 'org.scala-lang:scala-library:2.11.7'
 }
-
-tasks.register('source', Jar) {
-	from sourceSets.main.allSource
-	archiveClassifier.set('sources')
-}
-
-build.finalizedBy source
