@@ -20,14 +20,20 @@ object TimedoutPlayer {
 		}
 	}
 
-	def setTimeout(interval: Int)(func: => Unit): Unit = {
+	def setTimeout(interval: Int)(func: => Unit): Future[Unit] = {
 		Future {
 			Thread.sleep(interval)
 			func
 		}
 	}
 
-	def setInterval(interval: Int)(func: => Unit): Unit = {
+	def createFeature(func: => Unit): Future[Unit] = {
+		Future {
+			func
+		}
+	}
+
+	def setInterval(interval: Int)(func: => Unit): Future[Unit] = {
 		Future {
 			while (true) {
 				func
