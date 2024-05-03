@@ -13,18 +13,16 @@ object TimedoutPlayer {
 		if (timedoutPlayers.contains(nick))
 			timedoutPlayers -= nick
 
-	def temporaryAddition(nick: String, time: Int): Unit = {
+	def temporaryAddition(nick: String, time: Int): Future[Unit] = {
 		playerAdd(nick)
 		setTimeout(time) {
 			playerRemove(nick)
 		}
 	}
 
-	def setTimeout(interval: Int)(func: => Unit): Future[Unit] = {
-		Future {
-			Thread.sleep(interval)
-			func
-		}
+	def setTimeout(interval: Int)(func: => Unit): Future[Unit] = createFeature {
+		Thread.sleep(interval)
+		func
 	}
 
 	def createFeature(func: => Unit): Future[Unit] = {
@@ -33,12 +31,10 @@ object TimedoutPlayer {
 		}
 	}
 
-	def setInterval(interval: Int)(func: => Unit): Future[Unit] = {
-		Future {
-			while (true) {
-				func
-				Thread.sleep(interval)
-			}
+	def setInterval(interval: Int)(func: => Unit): Future[Unit] = createFeature {
+		while (true) {
+			func
+			Thread.sleep(interval)
 		}
 	}
 }
