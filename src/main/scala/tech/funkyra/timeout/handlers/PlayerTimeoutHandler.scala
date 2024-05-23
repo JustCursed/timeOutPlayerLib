@@ -3,7 +3,7 @@ package tech.funkyra.timeout.handlers
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.living._
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.{LeftClickBlock, RightClickBlock, RightClickItem}
-import net.minecraftforge.event.entity.player.{PlayerDropsEvent, PlayerInteractEvent}
+import net.minecraftforge.event.entity.player.{EntityItemPickupEvent, PlayerDropsEvent, PlayerInteractEvent}
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent
 import tech.funkyra.timeout.handlers.PlayerTimeoutHandler.{checkTimedoutPlayer, timedoutPlayers}
@@ -43,6 +43,9 @@ class PlayerTimeoutHandler {
 		checkTimedoutPlayer(e)
 
 	@SubscribeEvent def onPlayerBlockRClick(e: RightClickBlock): Unit =
+		checkTimedoutPlayer(e)
+
+	@SubscribeEvent def onEntityItemPickupEvent(e: EntityItemPickupEvent): Unit =
 		checkTimedoutPlayer(e)
 }
 
