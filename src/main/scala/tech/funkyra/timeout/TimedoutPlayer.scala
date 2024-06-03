@@ -37,4 +37,6 @@ object TimedoutPlayer {
 			Thread.sleep(interval)
 		}
 	}
+
+	def isTimeout(nick: String): Boolean = timedoutPlayers.contains(nick)
 }
